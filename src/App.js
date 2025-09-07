@@ -5,6 +5,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
+const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 export default function App() {
   const [medicines, setMedicines] = useState([]);
   const [selectedMedicine, setSelectedMedicine] = useState("");
@@ -15,7 +17,7 @@ export default function App() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/medicines`)
+      .get(`${API_BASE}/api/medicines`)
       .then((res) => setMedicines(res.data))
       .catch((err) => console.error(err));
   }, []);
@@ -24,7 +26,7 @@ export default function App() {
   const handleAddMedicine = () => {
     if (!newMedicine) return;
     axios
-      .post(`${process.env.REACT_APP_API_URL}/api/medicines`, { name: newMedicine })
+      .post(`${API_BASE}/api/medicines`, { name: newMedicine })
       .then((res) => {
         setMedicines([...medicines, res.data]);
         setNewMedicine("");
@@ -40,7 +42,7 @@ export default function App() {
 
   const saveUpdateMedicine = () => {
     axios
-      .put(`${process.env.REACT_APP_API_URL}/api/medicines/${editId}`, {
+      .put(`${API_BASE}/api/medicines/${editId}`, {
         name: newMedicine,
       })
       .then((res) => {
@@ -53,7 +55,7 @@ export default function App() {
 
   //  Delete Medicine
   const handleDeleteMedicine = (id) => {
-    axios.delete(`${process.env.REACT_APP_API_URL}/api/medicines/${id}`).then(() => {
+    axios.delete(`${API_BASE}/api/medicines/${id}`).then(() => {
       setMedicines(medicines.filter((m) => m._id !== id));
       toast.success("Medicine deleted");
     });
@@ -76,7 +78,7 @@ export default function App() {
 
   const saveOrder = () => {
     axios
-      .post(`${process.env.REACT_APP_API_URL}/api/orders`, { medicines: orderList })
+      .post(`${API_BASE}/api/orders`, { medicines: orderList })
       .catch((err) => console.error(err));
     toast.success("Order Saved Successfully");
   };
