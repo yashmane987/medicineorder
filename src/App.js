@@ -101,18 +101,26 @@ export default function App() {
 
   // Print Order
   const printOrder = () => {
-    if (orderList.length === 0) {
-      toast.error("No medicines added! Please add medicine first.");
-      return;
-    }
+  if (orderList.length === 0) {
+    toast.error("No medicines added! Please add medicine first.");
+    return;
+  }
 
-    if (!isOrderSaved) {
-      toast.error("Please save the order before printing");
-      return;
-    }
+  if (!isOrderSaved) {
+    toast.error("Please save the order before printing");
+    return;
+  }
 
-    window.print();
-  };
+  window.print();
+
+  // RESET EVERYTHING AFTER PRINT
+  setOrderList([]);
+  setSelectedMedicine("");
+  setQuantity(1);
+  setIsOrderSaved(false);
+
+  toast.success("Ready for a new order!");
+};
 
   return (
     <div className="container mt-4">
