@@ -113,7 +113,6 @@ export default function App() {
 
   window.print();
 
-  // RESET EVERYTHING AFTER PRINT
   setOrderList([]);
   setSelectedMedicine("");
   setQuantity(1);
